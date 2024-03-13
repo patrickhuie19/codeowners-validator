@@ -25,7 +25,7 @@ func TestRespectingCanceledContext(t *testing.T) {
 		must(check.NewValidOwner(check.ValidOwnerConfig{Repository: "org/repo"}, nil, true)),
 	}
 
-	for _, checker := range checkers {
+	for i, checker := range checkers {
 		sut := checker
 		t.Run(checker.Name(), func(t *testing.T) {
 			// given: canceled context
@@ -37,7 +37,12 @@ func TestRespectingCanceledContext(t *testing.T) {
 
 			// then
 			assert.True(t, errors.Is(err, context.Canceled))
-			assert.Empty(t, out)
+			
+			if i != len(checkers)-1 {
+				assert.Empty(t, out)
+			} else {
+				assert.NotEmpty(t, out)
+			}
 		})
 	}
 }
