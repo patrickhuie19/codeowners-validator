@@ -21,29 +21,29 @@ builds:
       # Install upx first, https://github.com/upx/upx/releases
       post: upx -9 "{{ .Path }}"
 
-archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-    format_overrides:
-      - goos: windows
-        format: zip
+#archives:
+#  - replacements:
+#      darwin: Darwin
+#      linux: Linux
+#      windows: Windows
+#      386: i386
+#      amd64: x86_64
+#    format_overrides:
+#      - goos: windows
+#        format: zip
 
 dockers:
   - dockerfile: Dockerfile
     ids:
       - codeowners-validator
     image_templates:
-      - "ghcr.io/mszostok/codeowners-validator:stable"
-      - "ghcr.io/mszostok/codeowners-validator:{{ .Tag }}"
-      - "ghcr.io/mszostok/codeowners-validator:v{{ .Major }}.{{ .Minor }}"
-      - "ghcr.io/mszostok/codeowners-validator:v{{ .Major }}"
-      - "mszostok/codeowners-validator:latest"
-      - "mszostok/codeowners-validator:{{ .Tag }}"
-      - "mszostok/codeowners-validator:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/patrickhuie19/codeowners-validator:stable"
+      - "ghcr.io/patrickhuie19/codeowners-validator:{{ .Tag }}"
+      - "ghcr.io/patrickhuie19/codeowners-validator:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/patrickhuie19/codeowners-validator:v{{ .Major }}"
+      - "patrickhuie19/codeowners-validator:latest"
+      - "patrickhuie19/codeowners-validator:{{ .Tag }}"
+      - "patrickhuie19/codeowners-validator:v{{ .Major }}.{{ .Minor }}"
 
 checksum:
   name_template: 'checksums.txt'
@@ -67,19 +67,19 @@ release:
   # Repo in which the release will be created.
   # Default is extracted from the origin remote URL or empty if its private hosted.
   github:
-    owner: mszostok
+    owner: patrickhuie19
     name: codeowners-validator
 
 brews:
   - name: codeowners-validator
-    homepage: https://github.com/mszostok/codeowners-validator
+    homepage: https://github.com/patrickhuie19/codeowners-validator
     description: Ensures the correctness of your CODEOWNERS file.
     license: "Apache License 2.0"
-    tap:
-      owner: mszostok
+    repository:
+      owner: patrickhuie19
       name: homebrew-tap
     commit_author:
-      name: Mateusz Szostok
-      email: szostok.mateusz@gmail.com
+      name: Patrick Huie
+      email: patrick.huie@smartcontract.com
     test: |
       system "#{bin}/codeowners-validator -v --short"

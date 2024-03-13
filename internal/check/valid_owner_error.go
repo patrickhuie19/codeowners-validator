@@ -7,9 +7,21 @@ type validateError struct {
 	permanent bool
 }
 
-func newValidateError(format string, a ...interface{}) *validateError {
+func newValidateRuntimeError(format string, a ...interface{}) *validateError {
 	return &validateError{
 		msg: fmt.Sprintf(format, a...),
+	}
+}
+
+func newValidateWarning(format string, a ...interface{}) *validateError {
+	return &validateError{
+		msg: fmt.Sprintf(format, a...),
+	}
+}
+
+func newValidateCritical(format string, a ...interface{}) *validateError {
+	return &validateError{
+		msg: fmt.Sprintf("[CRITICAL] " + format, a...),
 	}
 }
 

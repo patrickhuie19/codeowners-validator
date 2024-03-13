@@ -1,6 +1,6 @@
 name: "GitHub CODEOWNERS Validator"
 description: "GitHub action to ensure the correctness of your CODEOWNERS file."
-author: "szostok.mateusz@gmail.com"
+author: "patrick.huie@smartcontract.com"
 
 inputs:
   github_access_token:
@@ -33,7 +33,7 @@ inputs:
     required: false
 
   checks:
-    description: "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax"
+    description: "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax,patterns"
     required: false
     default: ""
 
