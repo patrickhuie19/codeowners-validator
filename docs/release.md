@@ -20,5 +20,10 @@ The release of the codeowners-validator tool is performed by the [GoReleaser](ht
 
 4. Locally from the root of the repository, run `goreleaser`.
    >**NOTE:** Currently, releases are made with goreleaser in version `0.104.0, commit 7c4352147b6d9636f13d2fc633cfab05d82d929c, built at 2019-03-20T02:18:40Z`
+
+   If it doesn't work the first time, try manually pushing with
+   `docker push ghcr.io/patrickhuie19/codeowners-validator:v0.1.0`.
    
-5. Recheck release generated on GitHub. 
+5. Recheck release generated on GitHub.
+
+6. To consume this action in a github workflow, supply the workflow with an appropriate token (GATI, or PAT), Alternatively, make the docker package public.

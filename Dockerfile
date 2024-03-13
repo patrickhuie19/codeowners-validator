@@ -6,7 +6,7 @@ RUN apk --no-cache add ca-certificates git
 
 FROM scratch
 
-LABEL org.opencontainers.image.source=https://github.com/mszostok/codeowners-validator
+LABEL org.opencontainers.image.source=https://github.com/patrickhuie19/codeowners-validator
 
 COPY ./codeowners-validator /codeowners-validator
 

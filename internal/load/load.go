@@ -35,7 +35,7 @@ func Checks(ctx context.Context, enabledChecks, experimentalChecks []string) ([]
 			Github       github.ClientConfig
 		}
 		if err := envconfig.Init(&cfg); err != nil {
-			return nil, errors.Wrapf(err, "while loading config for %s", "owners")
+			return nil, errors.Wrap(err, "while loading config for owners")
 		}
 
 		ghClient, isApp, err := github.NewClient(ctx, &cfg.Github)
@@ -43,7 +43,9 @@ func Checks(ctx context.Context, enabledChecks, experimentalChecks []string) ([]
 			return nil, errors.Wrap(err, "while creating GitHub client")
 		}
 
-		owners, err := check.NewValidOwner(cfg.OwnerChecker, ghClient, !isApp)
+		wrappedGhClient := check.NewWrappedGithubClient(ghClient)
+
+		owners, err := check.NewValidOwner(cfg.OwnerChecker, wrappedGhClient, !isApp)
 		if err != nil {
 			return nil, errors.Wrap(err, "while enabling 'owners' checker")
 		}
@@ -53,6 +55,18 @@ func Checks(ctx context.Context, enabledChecks, experimentalChecks []string) ([]
 		}
 
 		checks = append(checks, owners)
+	}
+
+	if isEnabled(enabledChecks, "patterns") {
+		var cfg struct {
+			IgnoredFiles []string `envconfig:"default="`
+		}
+
+		if err := envconfig.Init(&cfg); err != nil {
+			return nil, errors.Wrap(err, "while loading config for patterns")
+		}
+
+		checks = append(checks, check.NewValidFile(cfg.IgnoredFiles))
 	}
 
 	expChecks, err := loadExperimentalChecks(experimentalChecks)
