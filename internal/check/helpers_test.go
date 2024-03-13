@@ -1,6 +1,7 @@
 package check_test
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -42,4 +43,33 @@ func assertIssue(t *testing.T, expIssue *check.Issue, gotIssues []check.Issue) {
 	} else {
 		assert.Empty(t, gotIssues)
 	}
+}
+
+func Contains[K comparable](target K, list ...K) bool {
+	for _, k := range list {
+		if k == target {
+			return true
+		}
+	}
+	return false
+}
+
+// Context returns a context that is canceled when the test ends. 
+// If the test has a deadline, the returned context is canceled when the deadline is reached.
+//
+// Use instead of context.Background(). 
+func Context(tb testing.TB) context.Context {
+	ctx := context.Background()
+	var cancel func()
+	switch t := tb.(type) {
+	case *testing.T:
+		if d, ok := t.Deadline(); ok {
+			ctx, cancel = context.WithDeadline(ctx, d)
+		}
+	}
+	if cancel == nil {
+		ctx, cancel = context.WithCancel(ctx)
+	}
+	tb.Cleanup(cancel)
+	return ctx
 }

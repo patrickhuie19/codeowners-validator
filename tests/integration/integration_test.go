@@ -82,6 +82,12 @@ func TestCheckSuccess(t *testing.T) {
 					},
 				},
 				{
+					name: "patterns",
+					envs: Envs{
+						"CHECKS": "patterns",
+					},
+				},
+				{
 					name: "notowned",
 					envs: Envs{
 						"PATH":                os.Getenv("PATH"), // need to be set to find the `git` binary

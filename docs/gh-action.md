@@ -35,7 +35,7 @@ jobs:
       # Checks-out your repository, which is validated in the next step
       - uses: actions/checkout@v2
       - name: GitHub CODEOWNERS Validator
-        uses: mszostok/codeowners-validator@v0.7.4
+        uses: patrickhuie19/codeowners-validator@v0.1.0
         # input parameters
         with:
           # ==== GitHub Auth ====
@@ -56,8 +56,8 @@ jobs:
 
           # ==== GitHub Auth ====
 
-          # "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax"
-          checks: "files,owners,duppatterns,syntax"
+          # "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax,patterns"
+          checks: "files,owners,duppatterns,syntax,patterns"
 
           # "The comma-separated list of experimental checks that should be executed. By default, all experimental checks are turned off. Possible values: notowned,avoid-shadowing"
           experimental_checks: "notowned,avoid-shadowing"
@@ -84,10 +84,10 @@ jobs:
           owner_checker_ignored_owners: "@ghost"
 
           # Specifies whether CODEOWNERS may have unowned files. For example, `/infra/oncall-rotator/oncall-config.yml` doesn't have owner and this is not reported.
-          owner_checker_allow_unowned_patterns: "true"
+          owner_checker_allow_unowned_patterns: "false"
 
           # Specifies whether only teams are allowed as owners of files.
-          owner_checker_owners_must_be_teams: "false"
+          owner_checker_owners_must_be_teams: "true"
 
           # Only check listed subdirectories for CODEOWNERS ownership that don't have owners.
           not_owned_checker_subdirectories: ""
