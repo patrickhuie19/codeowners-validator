@@ -1,6 +1,6 @@
 name: "GitHub CODEOWNERS Validator"
 description: "GitHub action to ensure the correctness of your CODEOWNERS file."
-author: "szostok.mateusz@gmail.com"
+author: "patrick.huie@smartcontract.com"
 
 inputs:
   github_access_token:
@@ -33,7 +33,7 @@ inputs:
     required: false
 
   checks:
-    description: "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax"
+    description: "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax,patterns"
     required: false
     default: ""
 
@@ -80,7 +80,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/mszostok/codeowners-validator:v0.7.4'
+  image: 'docker://ghcr.io/patrickhuie19/codeowners-validator:stable'
   env:
     ENVS_PREFIX: "INPUT"
 

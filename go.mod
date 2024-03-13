@@ -1,6 +1,6 @@
 module go.szostok.io/codeowners-validator
 
-go 1.21
+go 1.22
 
 require (
 	github.com/bradleyfalzon/ghinstallation/v2 v2.9.0
