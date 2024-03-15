@@ -13,7 +13,7 @@ func TestValidFile(t *testing.T) {
 	tests := map[string]struct {
 		ignoredPatterns []string
 		entries         []codeowners.Entry
-		issue		    *check.Issue	
+		issue           *check.Issue
 	}{
 		"simple valid entry": {
 			ignoredPatterns: []string{},
@@ -48,7 +48,7 @@ func TestValidFile(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			// given
-			vf := check.NewValidFile(tt.ignoredPatterns)
+			vf := check.NewValidPattern(tt.ignoredPatterns)
 
 			// when
 			out, err := vf.Check(Context(t), check.Input{

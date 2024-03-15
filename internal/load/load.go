@@ -59,14 +59,14 @@ func Checks(ctx context.Context, enabledChecks, experimentalChecks []string) ([]
 
 	if isEnabled(enabledChecks, "patterns") {
 		var cfg struct {
-			IgnoredFiles []string `envconfig:"default="`
+			PatternChecker check.ValidPatternConfig
 		}
 
 		if err := envconfig.Init(&cfg); err != nil {
 			return nil, errors.Wrap(err, "while loading config for patterns")
 		}
 
-		checks = append(checks, check.NewValidFile(cfg.IgnoredFiles))
+		checks = append(checks, check.NewValidPattern(cfg.PatternChecker))
 	}
 
 	expChecks, err := loadExperimentalChecks(experimentalChecks)
