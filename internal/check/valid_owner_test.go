@@ -67,7 +67,7 @@ func (m mockOrganization) ListMembers(ctx context.Context, org string, opts *git
 type mockUsers struct {
 	validUsers []string
 
-	//explicit invalid
+	// explicit invalid
 	invalidUsers []string
 }
 

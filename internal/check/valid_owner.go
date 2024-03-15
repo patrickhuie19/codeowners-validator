@@ -54,7 +54,7 @@ func (g *WrappedGithubClientImpl) Repositories() Repositories {
 type GithubClientImpl struct {
 	Organization Organization
 	Teams        Teams
-	Users		 Users
+	Users        Users
 	Repositories Repositories
 }
 

@@ -9,7 +9,7 @@ import (
 )
 
 type ValidPatternConfig struct {
-	IgnoredPatterns []string `envconfig:"default="`
+	IgnoredPatterns []string `envconfig:"optional"`
 }
 
 // Satisfies the Checker interface

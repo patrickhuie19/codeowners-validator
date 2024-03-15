@@ -54,10 +54,10 @@ func Contains[K comparable](target K, list ...K) bool {
 	return false
 }
 
-// Context returns a context that is canceled when the test ends. 
+// Context returns a context that is canceled when the test ends.
 // If the test has a deadline, the returned context is canceled when the deadline is reached.
 //
-// Use instead of context.Background(). 
+// Use instead of context.Background().
 func Context(tb testing.TB) context.Context {
 	ctx := context.Background()
 	var cancel func()

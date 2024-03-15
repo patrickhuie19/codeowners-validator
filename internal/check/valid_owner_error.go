@@ -19,12 +19,6 @@ func newValidateWarning(format string, a ...interface{}) *validateError {
 	}
 }
 
-func newValidateCritical(format string, a ...interface{}) *validateError {
-	return &validateError{
-		msg: fmt.Sprintf("[CRITICAL] " + format, a...),
-	}
-}
-
 func (err *validateError) AsPermanent() *validateError {
 	err.permanent = true
 	return err

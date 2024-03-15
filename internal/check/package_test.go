@@ -37,7 +37,7 @@ func TestRespectingCanceledContext(t *testing.T) {
 
 			// then
 			assert.True(t, errors.Is(err, context.Canceled))
-			
+
 			if i != len(checkers)-1 {
 				assert.Empty(t, out)
 			} else {

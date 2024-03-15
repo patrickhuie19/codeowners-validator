@@ -48,7 +48,7 @@ func TestValidFile(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			// given
-			vf := check.NewValidPattern(tt.ignoredPatterns)
+			vf := check.NewValidPattern(check.ValidPatternConfig{IgnoredPatterns: tt.ignoredPatterns})
 
 			// when
 			out, err := vf.Check(Context(t), check.Input{
@@ -61,5 +61,4 @@ func TestValidFile(t *testing.T) {
 			assertIssue(t, tt.issue, out.Issues)
 		})
 	}
-
 }
