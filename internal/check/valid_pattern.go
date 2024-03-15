@@ -8,17 +8,21 @@ import (
 	"go.szostok.io/codeowners-validator/pkg/codeowners"
 )
 
+type ValidPatternConfig struct {
+	IgnoredPatterns []string `envconfig:"default="`
+}
+
 // Satisfies the Checker interface
-type ValidFile struct {
+type ValidPattern struct {
 	ignFiles map[string]struct{}
 }
 
-func NewValidFile(ignoredFiles []string) *ValidFile {
+func NewValidPattern(cfg ValidPatternConfig) *ValidPattern {
 	ignFiles := make(map[string]struct{})
-	for _, file := range ignoredFiles {
+	for _, file := range cfg.IgnoredPatterns {
 		ignFiles[file] = struct{}{}
 	}
-	return &ValidFile{
+	return &ValidPattern{
 		ignFiles: ignFiles,
 	}
 }
@@ -28,18 +32,19 @@ func NewValidFile(ignoredFiles []string) *ValidFile {
 // Checks:
 // - if the pattern is a discrete file (i.e. ends in a .go, .md, etc.)
 // - if the pattern is deeply nested (more than 4 levels deep)
-func (v *ValidFile) Check(ctx context.Context, in Input) (Output, error) {
+func (v *ValidPattern) Check(ctx context.Context, in Input) (Output, error) {
 	var bldr OutputBuilder
 
 	for _, entry := range in.CodeownersEntries {
-		permErr := v.checkPerEntry(ctx, entry, &bldr); if permErr != nil {
+		permErr := v.checkPerEntry(ctx, entry, &bldr)
+		if permErr != nil {
 			return bldr.Output(), permErr
 		}
 	}
 	return bldr.Output(), nil
 }
 
-func (v *ValidFile) checkPerEntry(ctx context.Context, entry codeowners.Entry, bldr *OutputBuilder) (permError error) {
+func (v *ValidPattern) checkPerEntry(ctx context.Context, entry codeowners.Entry, bldr *OutputBuilder) (permError error) {
 	if ctxutil.ShouldExit(ctx) {
 		return ctx.Err()
 	}
@@ -61,7 +66,7 @@ func (v *ValidFile) checkPerEntry(ctx context.Context, entry codeowners.Entry, b
 
 // Checks if the pattern is a discrete file (i.e. ends in a .go, .md, etc.)
 func isFile(pattern string) bool {
-	if (strings.Contains(pattern, ".")) {
+	if strings.Contains(pattern, ".") {
 		split := strings.Split(pattern, ".")
 		if len(split) > 1 {
 			return true
@@ -73,16 +78,16 @@ func isFile(pattern string) bool {
 
 // Checks if the pattern is deeply nested (more than 4 levels deep)
 func isDeeplyNested(pattern string) bool {
-	if (strings.Contains(pattern, "/")) {
+	if strings.Contains(pattern, "/") {
 		split := strings.SplitN(pattern, "/", 4)
 		if len(split) > 3 {
 			return true
 		}
 	}
-	
+
 	return false
 }
 
-func (v *ValidFile) Name() string {
+func (v *ValidPattern) Name() string {
 	return "Valid File Checker"
 }

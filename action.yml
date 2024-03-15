@@ -78,7 +78,7 @@ inputs:
     required: false
     default: "true"
 
-  input_ignored_files:
+  pattern_checker_ignored_patterns:
     description: "Specifies patterns that can be skipped in file validation"
     required: false
     default: ""
