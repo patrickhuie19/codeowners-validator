@@ -38,14 +38,14 @@ func Checks(ctx context.Context, enabledChecks, experimentalChecks []string) ([]
 			return nil, errors.Wrap(err, "while loading config for owners")
 		}
 
-		ghClient, isApp, err := github.NewClient(ctx, &cfg.Github)
+		ghClient, _, err := github.NewClient(ctx, &cfg.Github)
 		if err != nil {
 			return nil, errors.Wrap(err, "while creating GitHub client")
 		}
 
 		wrappedGhClient := check.NewWrappedGithubClient(ghClient)
 
-		owners, err := check.NewValidOwner(cfg.OwnerChecker, wrappedGhClient, !isApp)
+		owners, err := check.NewValidOwner(cfg.OwnerChecker, wrappedGhClient, false)
 		if err != nil {
 			return nil, errors.Wrap(err, "while enabling 'owners' checker")
 		}
