@@ -431,7 +431,7 @@ func (v *ValidOwner) initOrgListMembers(ctx context.Context) error {
 }
 
 // Name returns human-readable name of the validator
-func (ValidOwner) Name() string {
+func (v *ValidOwner) Name() string {
 	return "Valid Owner Checker"
 }
 

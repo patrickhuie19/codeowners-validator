@@ -24,6 +24,11 @@ The release of the codeowners-validator tool is performed by the [GoReleaser](ht
    If it doesn't work the first time, try manually pushing with
    `docker push ghcr.io/patrickhuie19/codeowners-validator:v0.1.0`.
    
+   For both goreleaser, and the above docker push step, you'll need a github token. I recommend one with `read:packages` `write:packages` and `delete:packages`.
+
+   If you are denied on the docker push step, try manually logging in:
+   ```echo $GITHUB_TOKEN | docker login ghcr.io -u patrickhuie19 --password-stdin```
+
 5. Recheck release generated on GitHub.
 
 6. To consume this action in a github workflow, supply the workflow with an appropriate token (GATI, or PAT), Alternatively, make the docker package public.
